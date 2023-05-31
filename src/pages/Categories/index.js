@@ -58,7 +58,6 @@ export default function Categories() {
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
-        <Text style={styles.SubText}> CATEGORIES </Text>
         <FlatList
           style={styles.FlatList}
           data={data}
@@ -84,12 +83,6 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 10,
-  },
-
-  SubText: {
-    fontFamily: fonts.bold,
-    fontSize: 25,
-    color: colors.textSecondary,
   },
 
   FlatList: {

@@ -3,6 +3,7 @@ import counterReducer from '../features/counter/counterSlice';
 import CategoriesReducer from '../features/Categories/CategoriesSlice';
 import CategoryDetailsReducer from '../features/CategoryDetails/CategoryDetailsSlice';
 import DailyReducer from '../features/Daily/DailySlice';
+import EventDetailsReducer from '../features/EventDetails/EventDetailsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     Categories: CategoriesReducer,
     Daily: DailyReducer,
     CategoryDetails: CategoryDetailsReducer,
+    EventDetails: EventDetailsReducer,
   },
 });

@@ -1,22 +1,29 @@
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {GeneralStyles, colors, fonts} from '../../Utils/GeneralStyles';
 import {fetchCategoryDetails} from '../../features/CategoryDetails/CategoryDetailsSlice';
 import Loading from '../../components/LoadingIcon';
+import {useNavigation} from '@react-navigation/native';
 
 export default function CategoryDetails({route}) {
+  const {navigate} = useNavigation();
   const id = route.params.id;
   const dispatch = useDispatch();
-  const {data, loading, error} = useSelector(state => state);
-
-  console.log(data);
+  const {loading, data, error} = useSelector(state => state.CategoryDetails);
 
   useEffect(() => {
     dispatch(fetchCategoryDetails(id));
-  }, [id]);
+  }, [dispatch, id]);
 
-  if (loading) {
+  if (loading || !data) {
     return (
       <SafeAreaView>
         <Loading />
@@ -34,18 +41,35 @@ export default function CategoryDetails({route}) {
     );
   }
 
+  const renderItem = ({item, index}) => (
+    <View style={styles.ItemContainer} key={index}>
+      <Text style={styles.ItemTitle}>{item.title}</Text>
+
+      <View style={styles.ItemInfo}>
+        <Text style={styles.ItemDescription}>{item.description}</Text>
+
+        {item.events !== {} && (
+          <TouchableOpacity
+            style={styles.ItemEventContainer}
+            onPress={() => navigate('EventDetails', {link: item.link})}>
+            <Text style={styles.ItemEventDetails}>See Event Details</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </View>
+  );
+
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
-        <Text style={styles.SubText}> {route.params.title}</Text>
-        <ScrollView style={styles.ScrollView}>
-          <View style={styles.ItemInfoContainer}>
-            <Text style={styles.ItemDate}>{route.params.description}</Text>
-            <Text style={styles.ItemExplanation}>{route.params.link}</Text>
-          </View>
+        <Text style={styles.SubText}> {data?.title}</Text>
+        <Text style={styles.SubDescription}>{data?.description}</Text>
 
-          <View style={styles.ItemContainer}></View>
-        </ScrollView>
+        <FlatList
+          data={data?.events}
+          keyExtractor={item => item.id}
+          renderItem={renderItem}
+        />
       </View>
     </SafeAreaView>
   );
@@ -60,49 +84,62 @@ const styles = StyleSheet.create({
   Container: {
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 30,
+    padding: 20,
     borderRadius: 10,
   },
 
   SubText: {
     fontFamily: fonts.bold,
     fontSize: 25,
-    color: colors.textSecondary,
+    color: colors.textPrice,
   },
 
-  ScrollView: {
-    width: 400,
-    paddingHorizontal: 10,
-  },
-
-  ItemInfoContainer: {
-    gap: 15,
-    paddingHorizontal: 10,
-  },
-
-  ItemDate: {
-    fontFamily: fonts.bold,
+  SubDescription: {
+    fontFamily: fonts.regular,
     fontSize: 16,
     textAlign: 'justify',
-    color: colors.secondary,
+    color: colors.textDark,
+  },
+
+  ItemContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.secondary,
   },
 
   ItemTitle: {
     fontFamily: fonts.bold,
     fontSize: 20,
     textAlign: 'center',
-    color: colors.textPrice,
-  },
-
-  ItemExplanation: {
-    fontFamily: fonts.regular,
-    fontSize: 16,
-    textAlign: 'justify',
     color: colors.textSecondary,
   },
 
-  ItemContainer: {
-    marginVertical: 50,
+  ItemInfo: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+
+  ItemDescription: {
+    fontFamily: fonts.regular,
+    fontSize: 16,
+    textAlign: 'justify',
+    color: colors.textDark,
+  },
+
+  ItemEventContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    bottom: 0,
+  },
+
+  ItemEventDetails: {
+    fontFamily: fonts.regular,
+    fontSize: 16,
+    color: colors.primary,
   },
 });
