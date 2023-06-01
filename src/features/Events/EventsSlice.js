@@ -7,31 +7,27 @@ const initialState = {
   error: null,
 };
 
-export const fetchEventDetails = createAsyncThunk(
-  'eventDetails/fetch',
-  async id => {
-    const response = await axiosInstance.get(`events/${id}`);
+export const fetchEvents = createAsyncThunk('events/fetch', async id => {
+  const response = await axiosInstance.get(`events`);
+  return response.data.events;
+});
 
-    return response.data;
-  },
-);
-
-const EventDetailsSlice = createSlice({
-  name: 'eventDetails',
+const EventsSlice = createSlice({
+  name: 'events',
   initialState,
   extraReducers: builder => {
     builder
-      .addCase(fetchEventDetails.pending, state => {
+      .addCase(fetchEvents.pending, state => {
         state.loading = true;
         state.error = null;
         state.data = {};
       })
-      .addCase(fetchEventDetails.fulfilled, (state, action) => {
+      .addCase(fetchEvents.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
         state.error = null;
       })
-      .addCase(fetchEventDetails.rejected, state => {
+      .addCase(fetchEvents.rejected, state => {
         state.error = true;
         state.loading = false;
         state.data = {};
@@ -39,4 +35,4 @@ const EventDetailsSlice = createSlice({
   },
 });
 
-export default EventDetailsSlice.reducer;
+export default EventsSlice.reducer;

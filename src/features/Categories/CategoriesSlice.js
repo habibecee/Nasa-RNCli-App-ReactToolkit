@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import axios from 'axios';
+import axiosInstance from '../../Utils/axios';
 
 const initialState = {
   data: [],
@@ -10,9 +10,7 @@ const initialState = {
 export const fetchCategories = createAsyncThunk(
   'categories/fetch',
   async () => {
-    const response = await axios.get(
-      'https://eonet.gsfc.nasa.gov/api/v3/categories',
-    );
+    const response = await axiosInstance.get('categories');
     return response.data.categories;
   },
 );

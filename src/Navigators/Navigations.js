@@ -12,6 +12,7 @@ import Account from '../pages/Account';
 import ListIcon from '../components/ListIcon';
 import CategoryDetails from '../pages/CategoryDetails';
 import EventDetails from '../pages/EventDetails';
+import Events from '../pages/Events';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,7 @@ function StackNavigator() {
       }}>
       <Stack.Screen name="Categories" component={Categories} />
       <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
+      <Stack.Screen name="Events" component={Events} />
       <Stack.Screen name="EventDetails" component={EventDetails} />
     </Stack.Navigator>
   );
