@@ -51,7 +51,7 @@ export default function CategoryDetails({route}) {
         {item.events !== {} && (
           <TouchableOpacity
             style={styles.ItemEventContainer}
-            onPress={() => navigate('EventDetails', {link: item.link})}>
+            onPress={() => navigate('EventDetails', {id: item.id})}>
             <Text style={styles.ItemEventDetails}>See Event Details</Text>
           </TouchableOpacity>
         )}

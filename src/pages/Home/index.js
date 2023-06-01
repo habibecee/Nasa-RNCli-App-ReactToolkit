@@ -1,4 +1,11 @@
-import {View, Text, SafeAreaView, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchDaily} from '../../features/Daily/DailySlice';
@@ -12,50 +19,43 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchDaily());
-  }, []);
-
-  if (loading) {
-    return (
-      <SafeAreaView>
-        <Loading />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView>
-        <View>
-          <Text> Error: {error} </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
-  const url = data.url;
-  const videoId = url.split('/').pop().split('?')[0];
+  }, [dispatch]);
 
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
         <Text style={styles.SubText}> DAILY TODAY </Text>
-        <ScrollView style={styles.ScrollView}>
-          <View style={styles.ItemInfoContainer}>
-            <Text style={styles.ItemDate}>{data.date}</Text>
-            <Text style={styles.ItemTitle}>{data.title}</Text>
-            <Text style={styles.ItemExplanation}>{data.explanation}</Text>
-          </View>
 
-          <View style={styles.ItemContainer}>
-            <YouTube
-              videoId={videoId} // YouTube video kimliği
-              // play // Video otomatik olarak oynatılsın mı?
-              fullscreen // Videonun tam ekran oynatılmasını sağlar
-              loop
-              apiKey={process.env.YOUTUBE_API_KEY}
-              style={{alignSelf: 'stretch', width: '100%', height: 300}}
-            />
-          </View>
+        {loading && <Loading />}
+
+        {error && <Text style={styles.SubError}> Error: {error} </Text>}
+
+        <ScrollView style={styles.ScrollView}>
+          {data && (
+            <View>
+              <View style={styles.ItemInfoContainer}>
+                <Text style={styles.ItemDate}>{data?.date}</Text>
+                <Text style={styles.ItemTitle}>{data?.title}</Text>
+                <Text style={styles.ItemExplanation}>{data?.explanation}</Text>
+              </View>
+
+              <View style={styles.ItemContainer}>
+                {data?.media_type === 'video' ? (
+                  <YouTube
+                    videoId={data?.url?.split('/').pop().split('?')[0]} // YouTube video kimliği
+                    // play // Video otomatik olarak oynatılsın mı?
+                    fullscreen // Videonun tam ekran oynatılmasını sağlar
+                    loop
+                    apiKey={process.env.YOUTUBE_API_KEY}
+                    //YOUTUBE_API_KEY =  AIzaSyAwIHWfUal3Bd7r8Yw_5MSrYRsYvbalp90
+                    style={{alignSelf: 'stretch', width: '100%', height: 300}}
+                  />
+                ) : (
+                  <Image source={{uri: data?.url}} style={styles.Image} />
+                )}
+              </View>
+            </View>
+          )}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -74,6 +74,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 10,
+  },
+
+  SubError: {
+    fontFamily: fonts.bold,
+    fontSize: 30,
+    color: colors.textPrice,
   },
 
   SubText: {
@@ -115,5 +121,11 @@ const styles = StyleSheet.create({
 
   ItemContainer: {
     marginVertical: 50,
+  },
+
+  Image: {
+    width: '100%',
+    height: 300,
+    resizeMode: 'contain',
   },
 });
