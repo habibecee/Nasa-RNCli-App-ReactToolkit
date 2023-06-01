@@ -10,6 +10,7 @@ const initialState = {
 
 export const fetchDaily = createAsyncThunk('daily/fetch', async () => {
   const response = await axios.get(
+    // `https://api.nasa.gov/planetary/apod?api_key=qZtCoHuQ7juQPVUOE54PiKwjF09ffKFyaZog9Yn3`,
     `https://api.nasa.gov/planetary/apod?api_key=${Config.NASA_API_KEY}`,
   );
   return response.data;
