@@ -9,7 +9,6 @@ import UserIcon from '../components/UserIcon';
 import ListIcon from '../components/ListIcon';
 import AccountNavigation from './AccountNavigations';
 import CategoryNavigation from './CategoryNavigations';
-import Account from '../pages/Account';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,13 +32,12 @@ function MainNavigations() {
               fontSize: 18,
             },
           })}
-          initialRouteName="Account">
+          initialRouteName="Home">
           <Tab.Screen
             name="Category List"
             component={CategoryNavigation}
             options={{
               headerShown: false,
-
               tabBarIcon: () => <ListIcon />,
             }}
           />
@@ -48,7 +46,6 @@ function MainNavigations() {
             component={Home}
             options={{
               headerShown: false,
-
               tabBarIcon: () => <HomeIcon />,
             }}
           />
@@ -57,7 +54,6 @@ function MainNavigations() {
             component={AccountNavigation}
             options={{
               headerShown: false,
-
               tabBarIcon: () => <UserIcon />,
             }}
           />

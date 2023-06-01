@@ -23,24 +23,6 @@ export default function CategoryDetails({route}) {
     dispatch(fetchCategoryDetails(id));
   }, [dispatch, id]);
 
-  if (loading || !data) {
-    return (
-      <SafeAreaView>
-        <Loading />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView>
-        <View>
-          <Text> Error: {error} </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   const renderItem = ({item, index}) => (
     <View style={styles.ItemContainer} key={index}>
       <Text style={styles.ItemTitle}>{item.title}</Text>
@@ -62,6 +44,10 @@ export default function CategoryDetails({route}) {
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
+        {loading && <Loading />}
+
+        {error && <Text style={styles.SubError}> Error: {error} </Text>}
+
         <Text style={styles.SubText}> {data?.title}</Text>
         <Text style={styles.SubDescription}>{data?.description}</Text>
 
@@ -86,6 +72,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     borderRadius: 10,
+  },
+
+  SubError: {
+    fontFamily: fonts.bold,
+    fontSize: 30,
+    color: colors.textPrice,
   },
 
   SubText: {

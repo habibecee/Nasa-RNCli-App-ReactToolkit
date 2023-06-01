@@ -23,24 +23,6 @@ export default function Categories() {
     dispatch(fetchCategories());
   }, []);
 
-  if (loading) {
-    return (
-      <SafeAreaView>
-        <Loading />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView>
-        <View>
-          <Text> Error: {error} </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       style={styles.ItemContainer}
@@ -58,14 +40,20 @@ export default function Categories() {
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
-        <FlatList
-          style={styles.FlatList}
-          data={data}
-          keyExtractor={(item, index) => index.toString()}
-          contentContainerStyle={{paddingBottom: 100}}
-          ListEmptyComponent={ListEmptyComponent}
-          renderItem={renderItem}
-        />
+        {loading && <Loading />}
+
+        {error && <Text style={styles.SubError}> Error: {error} </Text>}
+
+        {data && (
+          <FlatList
+            style={styles.FlatList}
+            data={data}
+            keyExtractor={(item, index) => index.toString()}
+            contentContainerStyle={{paddingBottom: 100}}
+            ListEmptyComponent={ListEmptyComponent}
+            renderItem={renderItem}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -83,6 +71,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 10,
+  },
+
+  SubError: {
+    fontFamily: fonts.bold,
+    fontSize: 30,
+    color: colors.textPrice,
   },
 
   FlatList: {
