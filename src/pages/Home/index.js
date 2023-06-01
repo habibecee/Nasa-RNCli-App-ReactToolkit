@@ -47,6 +47,7 @@ export default function Home() {
                     fullscreen // Videonun tam ekran oynatılmasını sağlar
                     loop
                     apiKey={process.env.YOUTUBE_API_KEY}
+                    //YOUTUBE_API_KEY =  AIzaSyAwIHWfUal3Bd7r8Yw_5MSrYRsYvbalp90
                     style={{alignSelf: 'stretch', width: '100%', height: 300}}
                   />
                 ) : (
