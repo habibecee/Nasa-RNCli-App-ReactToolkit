@@ -32,7 +32,7 @@ const EventDetailsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchEventDetails.rejected, state => {
-        state.error = true;
+        state.error = action.error.message;
         state.loading = false;
         state.data = {};
       });

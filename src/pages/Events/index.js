@@ -23,24 +23,6 @@ export default function Events() {
     dispatch(fetchEvents());
   }, []);
 
-  if (loading) {
-    return (
-      <SafeAreaView>
-        <Loading />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView>
-        <View>
-          <Text> Error: {error} </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   const renderItem = ({item, index}) => (
     <TouchableOpacity
       style={styles.ItemContainer}
@@ -58,6 +40,10 @@ export default function Events() {
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
+        {loading && <Loading />}
+
+        {error && <Text style={styles.SubError}> Error: {error} </Text>}
+
         <FlatList
           style={styles.FlatList}
           data={data}
@@ -83,6 +69,12 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 10,
+  },
+
+  SubError: {
+    fontFamily: fonts.bold,
+    fontSize: 30,
+    color: colors.textPrice,
   },
 
   FlatList: {

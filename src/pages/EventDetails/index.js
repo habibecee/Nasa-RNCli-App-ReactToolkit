@@ -26,111 +26,109 @@ const EventDetails = ({route}) => {
     dispatch(fetchEventDetails(id));
   }, [dispatch, id]);
 
-  if (loading || !data) {
-    return (
-      <SafeAreaView style={GeneralStyles.SafeAreaView}>
-        <Loading />
-      </SafeAreaView>
-    );
-  }
-
-  if (error) {
-    return (
-      <SafeAreaView style={GeneralStyles.SafeAreaView}>
-        <View style={styles.container}>
-          <Text style={styles.errorText}> Error: {error} </Text>
-        </View>
-      </SafeAreaView>
-    );
-  }
-
   return (
-    <View style={[GeneralStyles.container, styles.container]}>
-      <Text style={styles.SubText}> Event Name: {data?.title}</Text>
+    <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
+      <View style={[GeneralStyles.container, styles.container]}>
+        {loading && <Loading />}
 
-      {data?.categories &&
-        data?.categories?.map((item, index) => (
-          <View key={index}>
-            <Text style={styles.SubSecText}>
-              {' '}
-              Category Name:{' '}
-              <Text style={styles.TextCatInfo}>{item?.title}</Text>{' '}
-            </Text>
-          </View>
-        ))}
+        {error && <Text style={styles.SubError}> Error: {error} </Text>}
 
-      <ScrollView>
-        <Text style={styles.SubThirdText}>GEOMETRIC VALUES</Text>
+        <Text style={styles.SubText}> Event Name: {data?.title}</Text>
 
-        {data?.geometry &&
-          data?.geometry?.map((item, index) => (
-            <View style={styles.geometryItemContainer} key={index}>
-              <Text style={styles.SubInfo}>
+        {data?.categories &&
+          data?.categories?.map((item, index) => (
+            <View key={index}>
+              <Text style={styles.SubSecText}>
                 {' '}
-                Magnitude Value:{' '}
-                <Text style={styles.TextInfo}>{item?.magnitudeValue}</Text>{' '}
-              </Text>
-              <Text style={styles.SubInfo}>
-                {' '}
-                Magnitude Unit:{' '}
-                <Text style={styles.TextInfo}>{item?.magnitudeUnit}</Text>{' '}
-              </Text>
-
-              <Text style={styles.SubInfo}>
-                {' '}
-                Date: <Text style={styles.TextInfo}>{item?.date}</Text>{' '}
-              </Text>
-
-              <Text style={styles.SubInfo}>
-                {' '}
-                Type: <Text style={styles.TextInfo}>{item?.type}</Text>{' '}
-              </Text>
-              <Text style={styles.SubInfo}>
-                {' '}
-                Coordinates:{' '}
-                <Text style={styles.TextInfo}>{item?.coordinates}</Text>{' '}
+                Category Name:{' '}
+                <Text style={styles.TextCatInfo}>{item?.title}</Text>{' '}
               </Text>
             </View>
           ))}
 
-        <Text style={styles.SubThirdText}>SOURCES</Text>
+        <ScrollView>
+          <Text style={styles.SubThirdText}>GEOMETRIC VALUES</Text>
 
-        {data?.sources &&
-          data?.sources?.map((item, index) => (
-            <View style={styles.geometryItemContainer} key={index}>
-              <Text style={styles.SubInfo}>
-                {' '}
-                Sources: <Text style={styles.TextInfo}>{item?.id}</Text>{' '}
-              </Text>
-
-              <TouchableOpacity onPress={() => Linking.openURL(item?.url)}>
+          {data?.geometry &&
+            data?.geometry?.map((item, index) => (
+              <View style={styles.geometryItemContainer} key={index}>
                 <Text style={styles.SubInfo}>
                   {' '}
-                  URL(Download):{' '}
-                  <Text style={styles.TextInfo}>{item?.url}</Text>{' '}
+                  Magnitude Value:{' '}
+                  <Text style={styles.TextInfo}>
+                    {item?.magnitudeValue}
+                  </Text>{' '}
                 </Text>
-              </TouchableOpacity>
-            </View>
-          ))}
-      </ScrollView>
+                <Text style={styles.SubInfo}>
+                  {' '}
+                  Magnitude Unit:{' '}
+                  <Text style={styles.TextInfo}>
+                    {item?.magnitudeUnit}
+                  </Text>{' '}
+                </Text>
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigate('Events')}>
-        <Text style={styles.buttonText}> See all events </Text>
-      </TouchableOpacity>
-    </View>
+                <Text style={styles.SubInfo}>
+                  {' '}
+                  Date: <Text style={styles.TextInfo}>{item?.date}</Text>{' '}
+                </Text>
+
+                <Text style={styles.SubInfo}>
+                  {' '}
+                  Type: <Text style={styles.TextInfo}>{item?.type}</Text>{' '}
+                </Text>
+                <Text style={styles.SubInfo}>
+                  {' '}
+                  Coordinates:{' '}
+                  <Text style={styles.TextInfo}>{item?.coordinates}</Text>{' '}
+                </Text>
+              </View>
+            ))}
+
+          <Text style={styles.SubThirdText}>SOURCES</Text>
+
+          {data?.sources &&
+            data?.sources?.map((item, index) => (
+              <View style={styles.geometryItemContainer} key={index}>
+                <Text style={styles.SubInfo}>
+                  {' '}
+                  Sources: <Text style={styles.TextInfo}>{item?.id}</Text>{' '}
+                </Text>
+
+                <TouchableOpacity onPress={() => Linking.openURL(item?.url)}>
+                  <Text style={styles.SubInfo}>
+                    {' '}
+                    URL(Download):{' '}
+                    <Text style={styles.TextInfo}>{item?.url}</Text>{' '}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+        </ScrollView>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigate('Events')}>
+          <Text style={styles.buttonText}> See all events </Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  SafeAreaView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   container: {
     padding: 20,
   },
-  errorText: {
-    color: colors.red,
+
+  SubError: {
     fontFamily: fonts.bold,
-    fontSize: 18,
+    fontSize: 30,
+    color: colors.textPrice,
   },
 
   SubText: {

@@ -28,7 +28,7 @@ const EventsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchEvents.rejected, state => {
-        state.error = true;
+        state.error = action.error.message;
         state.loading = false;
         state.data = {};
       });

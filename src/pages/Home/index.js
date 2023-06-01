@@ -42,12 +42,11 @@ export default function Home() {
               <View style={styles.ItemContainer}>
                 {data?.media_type === 'video' ? (
                   <YouTube
-                    videoId={data?.url?.split('/').pop().split('?')[0]} // YouTube video kimliği
-                    // play // Video otomatik olarak oynatılsın mı?
-                    fullscreen // Videonun tam ekran oynatılmasını sağlar
+                    videoId={data?.url?.split('/').pop().split('?')[0]}
+                    // play
+                    fullscreen
                     loop
                     apiKey={process.env.YOUTUBE_API_KEY}
-                    //YOUTUBE_API_KEY =  AIzaSyAwIHWfUal3Bd7r8Yw_5MSrYRsYvbalp90
                     style={{alignSelf: 'stretch', width: '100%', height: 300}}
                   />
                 ) : (
