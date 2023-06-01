@@ -1,8 +1,8 @@
 import React from 'react';
-import Navigations from './src/Navigators/Navigations';
+import MainNavigations from './src/Navigators/MainNavigations';
 
 function App() {
-	return <Navigations />;
+  return <MainNavigations />;
 }
 
 export default App;
