@@ -9,6 +9,8 @@ import UserIcon from '../components/UserIcon';
 import ListIcon from '../components/ListIcon';
 import AccountNavigation from './AccountNavigations';
 import CategoryNavigation from './CategoryNavigations';
+import MediaIcon from '../components/MediaIcon';
+import NasaMediaNavigation from './NasaMediaNavigations';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +27,8 @@ function MainNavigations() {
               justifyContent: 'center',
               alignItems: 'center',
               height: 75,
-              padding: 10,
+              paddingVertical: 10,
+              paddingHorizontal: 20,
             },
             tabBarLabelStyle: {
               fontFamily: fonts.bold,
@@ -34,11 +37,19 @@ function MainNavigations() {
           })}
           initialRouteName="Home">
           <Tab.Screen
-            name="Category List"
+            name="Categories"
             component={CategoryNavigation}
             options={{
               headerShown: false,
               tabBarIcon: () => <ListIcon />,
+            }}
+          />
+          <Tab.Screen
+            name="NASA"
+            component={NasaMediaNavigation}
+            options={{
+              headerShown: false,
+              tabBarIcon: () => <MediaIcon />,
             }}
           />
           <Tab.Screen

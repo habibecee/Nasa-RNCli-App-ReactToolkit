@@ -33,16 +33,32 @@ export default function Categories() {
     </TouchableOpacity>
   );
 
-  const ListEmptyComponent = () => {
-    return <Loading />;
-  };
-
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
         {loading && <Loading />}
 
-        {error && <Text style={styles.SubError}> Error: {error} </Text>}
+        {error && (
+          <>
+            <Text style={styles.SubError}>
+              {' '}
+              Error: {error} (Server is not available now!){' '}
+            </Text>
+
+            <View style={styles.guidanceContainer}>
+              <Text style={styles.ItemTitle}>
+                {' '}
+                Have you ever seen NASA's media collection?
+              </Text>
+
+              <TouchableOpacity
+                style={styles.guidanceButton}
+                onPress={() => navigate('NasaMedia')}>
+                <Text style={styles.guidanceButtonText}> See now!</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
 
         {data && (
           <FlatList
@@ -50,7 +66,6 @@ export default function Categories() {
             data={data}
             keyExtractor={(item, index) => index.toString()}
             contentContainerStyle={{paddingBottom: 100}}
-            ListEmptyComponent={ListEmptyComponent}
             renderItem={renderItem}
           />
         )}
@@ -77,6 +92,25 @@ const styles = StyleSheet.create({
     fontFamily: fonts.bold,
     fontSize: 30,
     color: colors.textPrice,
+  },
+
+  guidanceContainer: {
+    justifyContent: 'center',
+    textAlign: 'justify',
+    gap: 10,
+  },
+
+  guidanceButton: {
+    backgroundColor: colors.textSecondary,
+    borderRadius: 10,
+    padding: 10,
+  },
+
+  guidanceButtonText: {
+    fontFamily: fonts.bold,
+    fontSize: 20,
+    color: colors.tertiary,
+    textAlign: 'center',
   },
 
   FlatList: {

@@ -5,6 +5,8 @@ import CategoryDetailsReducer from '../features/CategoryDetails/CategoryDetailsS
 import DailyReducer from '../features/Daily/DailySlice';
 import EventDetailsReducer from '../features/EventDetails/EventDetailsSlice';
 import EventsReducer from '../features/Events/EventsSlice';
+import NasaMediaReducer from '../features/NasaMedia/NasaMediaSlice';
+import NasaMediaDetailsReducer from '../features/NasaMediaDetails/NasaMediaDetailsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +16,7 @@ export const store = configureStore({
     Daily: DailyReducer,
     CategoryDetails: CategoryDetailsReducer,
     EventDetails: EventDetailsReducer,
+    NasaMedia: NasaMediaReducer,
+    NasaMediaDetails: NasaMediaDetailsReducer,
   },
 });
