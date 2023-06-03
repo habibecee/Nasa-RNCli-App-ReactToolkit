@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import axios from 'axios';
+import {NASA_API_KEY} from '@env';
 
 const initialState = {
   data: {},
@@ -9,7 +10,7 @@ const initialState = {
 
 export const fetchDaily = createAsyncThunk('daily/fetch', async () => {
   const response = await axios.get(
-    `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY`,
+    `https://api.nasa.gov/planetary/apod?api_key=${NASA_API_KEY}`,
   );
   return response.data;
 });

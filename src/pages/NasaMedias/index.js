@@ -61,6 +61,7 @@ export default function NasaMedias() {
           id: item?.href,
           typeOf: searchQuery,
           itemDetail: item,
+          title: item?.data[0]?.title,
         })
       }>
       {item?.links?.map((link, index) => (

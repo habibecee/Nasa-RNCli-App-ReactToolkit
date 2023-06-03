@@ -167,7 +167,8 @@ dependencies {
     } else {
         implementation jscFlavor
     }
-    implementation project(':react-native-video-player')
+    implementation project(':react-native-video')
+
 
 }
 
