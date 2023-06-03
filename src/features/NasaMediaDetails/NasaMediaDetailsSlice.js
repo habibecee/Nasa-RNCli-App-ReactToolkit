@@ -10,10 +10,14 @@ const initialState = {
 export const fetchMediaDetails = createAsyncThunk(
   'nasaMediaDetails/fetch',
   async id => {
-    const response = await axios.get(`${id}`);
-    console.log(response.data);
+    try {
+      const response = await axios.get(id);
+      const data = response.data; // Yanıtın JSON verisi
 
-    return response.data;
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
 );
 
