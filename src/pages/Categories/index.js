@@ -27,7 +27,9 @@ export default function Categories() {
     <TouchableOpacity
       style={styles.ItemContainer}
       key={item.id}
-      onPress={() => navigate('CategoryDetails', {id: item.id})}>
+      onPress={() =>
+        navigate('CategoryDetails', {id: item.id, title: item.title})
+      }>
       <Text style={styles.ItemNumber}>{index + 1}</Text>
       <Text style={styles.ItemTitle}>{item.title}</Text>
     </TouchableOpacity>

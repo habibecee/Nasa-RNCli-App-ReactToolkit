@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 export default function CategoryDetails({route}) {
   const {navigate} = useNavigation();
   const id = route.params.id;
+  const title = route.params.title;
   const dispatch = useDispatch();
   const {loading, data, error} = useSelector(state => state.CategoryDetails);
 
@@ -33,7 +34,9 @@ export default function CategoryDetails({route}) {
         {item.events !== {} && (
           <TouchableOpacity
             style={styles.ItemEventContainer}
-            onPress={() => navigate('EventDetails', {id: item.id})}>
+            onPress={() =>
+              navigate('EventDetails', {id: item.id, title: item.title})
+            }>
             <Text style={styles.ItemEventDetails}>See Event Details</Text>
           </TouchableOpacity>
         )}
@@ -48,7 +51,7 @@ export default function CategoryDetails({route}) {
 
         {error && <Text style={styles.SubError}> Error: {error} </Text>}
 
-        <Text style={styles.SubText}> {data?.title}</Text>
+        {/* <Text style={styles.SubText}> {data?.title}</Text> */}
         <Text style={styles.SubDescription}>{data?.description}</Text>
 
         <FlatList

@@ -12,7 +12,8 @@ export const colors = {
   bgGreen: '#F6FFDE',
   darkGreen: '#41644A',
   darkShadowGreen: '#AAC8A7',
-  darkBlue: '#146C94',
+  darkBlue: '#0008C1',
+  linkBlue: '#3366CC',
 
   textDark: '#301E67',
   textLight: '#635985',
