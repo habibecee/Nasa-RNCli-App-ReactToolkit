@@ -19,6 +19,7 @@ import {GeneralStyles} from '../../Utils/GeneralStyles';
 const EventDetails = ({route}) => {
   const {navigate} = useNavigation();
   const id = route.params.id;
+  const title = route.params.title;
   const dispatch = useDispatch();
   const {data, loading, error} = useSelector(state => state.EventDetails);
 
@@ -33,15 +34,16 @@ const EventDetails = ({route}) => {
 
         {error && <Text style={styles.SubError}> Error: {error} </Text>}
 
-        <Text style={styles.SubText}> Event Name: {data?.title}</Text>
+        {/* <Text style={styles.SubText}> Event Name: {data?.title}</Text> */}
 
         {data?.categories &&
           data?.categories?.map((item, index) => (
             <View key={index}>
               <Text style={styles.SubSecText}>
                 {' '}
-                Category Name:{' '}
-                <Text style={styles.TextCatInfo}>{item?.title}</Text>{' '}
+                Category: <Text style={styles.TextCatInfo}>
+                  {item?.title}
+                </Text>{' '}
               </Text>
             </View>
           ))}

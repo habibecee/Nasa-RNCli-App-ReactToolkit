@@ -28,8 +28,24 @@ function CategoryNavigation() {
         },
       }}>
       <Stack.Screen name="Categories" component={Categories} />
-      <Stack.Screen name="CategoryDetails" component={CategoryDetails} />
-      <Stack.Screen name="EventDetails" component={EventDetails} />
+      <Stack.Screen
+        name="CategoryDetails"
+        component={CategoryDetails}
+        options={({route}) => {
+          return {
+            title: route?.params?.title,
+          };
+        }}
+      />
+      <Stack.Screen
+        name="EventDetails"
+        component={EventDetails}
+        options={({route}) => {
+          return {
+            title: route?.params?.title,
+          };
+        }}
+      />
       <Stack.Screen name="Events" component={Events} />
     </Stack.Navigator>
   );

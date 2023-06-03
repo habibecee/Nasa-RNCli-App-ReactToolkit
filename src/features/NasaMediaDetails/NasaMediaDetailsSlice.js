@@ -10,10 +10,14 @@ const initialState = {
 export const fetchMediaDetails = createAsyncThunk(
   'nasaMediaDetails/fetch',
   async id => {
-    const response = await axios.get(`${id}`);
-    console.log(response.data);
+    try {
+      const response = await axios.get(id);
+      const data = response.data; // Yanıtın JSON verisi
 
-    return response.data;
+      return data;
+    } catch (error) {
+      throw error;
+    }
   },
 );
 
@@ -33,7 +37,7 @@ const NasaMediaDetailsSlice = createSlice({
         state.status = 'succeeded';
         state.loading = false;
         state.error = null;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(fetchMediaDetails.rejected, (state, action) => {
         state.error = action.error.message;

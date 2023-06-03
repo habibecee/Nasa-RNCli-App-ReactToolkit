@@ -27,6 +27,7 @@
 		3A7683E32A2A4858005B5977 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A7683D42A2A4858005B5977 /* EvilIcons.ttf */; };
 		3A7683E42A2A4858005B5977 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A7683D52A2A4858005B5977 /* SimpleLineIcons.ttf */; };
 		3A7683E52A2A4858005B5977 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3A7683D62A2A4858005B5977 /* Ionicons.ttf */; };
+		3AD5F6B42A2B428700763D71 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3AD5F6B32A2B428700763D71 /* MaterialIcons.ttf */; };
 		3FB9E72D5A5D4809BB074A9E /* Kalam-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0DC90BA331F645A1A688BFEB /* Kalam-Regular.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A0D17B144D0884654AD47DFE /* libPods-RTApp-RTAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 841103E311E3778D0C73DD6C /* libPods-RTApp-RTAppTests.a */; };
@@ -71,6 +72,7 @@
 		3A7683D42A2A4858005B5977 /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		3A7683D52A2A4858005B5977 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		3A7683D62A2A4858005B5977 /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		3AD5F6B32A2B428700763D71 /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		40453BF9262C41318B1E4B76 /* Kalam-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Kalam-Bold.ttf"; path = "../assets/fonts/Kalam-Bold.ttf"; sourceTree = "<group>"; };
 		45C2CFDC8D5CD04C41BBEC7E /* libPods-RTApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RTApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C7FE834723DF0DC2EC8150C /* Pods-RTApp-RTAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RTApp-RTAppTests.debug.xcconfig"; path = "Target Support Files/Pods-RTApp-RTAppTests/Pods-RTApp-RTAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				3AD5F6B32A2B428700763D71 /* MaterialIcons.ttf */,
 				3A7683D12A2A4858005B5977 /* AntDesign.ttf */,
 				3A7683CE2A2A4858005B5977 /* Entypo.ttf */,
 				3A7683D42A2A4858005B5977 /* EvilIcons.ttf */,
@@ -304,6 +307,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3AD5F6B42A2B428700763D71 /* MaterialIcons.ttf in Resources */,
 				3A7683D72A2A4858005B5977 /* FontAwesome5_Solid.ttf in Resources */,
 				3A7683D82A2A4858005B5977 /* Foundation.ttf in Resources */,
 				3A7683D92A2A4858005B5977 /* FontAwesome.ttf in Resources */,

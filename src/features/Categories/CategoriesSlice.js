@@ -29,7 +29,7 @@ const CategoriesSlice = createSlice({
         state.loading = false;
         state.data = action.payload;
         state.error = null;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(fetchCategories.rejected, (state, action) => {
         state.error = action.error.message;

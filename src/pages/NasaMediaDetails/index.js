@@ -10,101 +10,142 @@ import {
   Dimensions,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {GeneralStyles, colors, fonts} from '../../Utils/GeneralStyles';
-import {VideoPlayer} from 'react-native-video-player';
 import {fetchMediaDetails} from '../../features/NasaMediaDetails/NasaMediaDetailsSlice';
+import VideoPlayer from 'react-native-video-player';
+import Loading from '../../components/LoadingIcon';
 
 function NasaMediaDetails({route}) {
   const {id, typeOf, itemDetail} = route?.params;
-  const {navigate} = useNavigation();
   const dispatch = useDispatch();
   const {data, loading, error} = useSelector(state => state?.NasaMediaDetails);
+
+  console.log('TYPEOF:', typeOf);
 
   useEffect(() => {
     dispatch(fetchMediaDetails(id));
   }, [dispatch, id]);
 
-  const isVideo = url => {
-    return /\.(mp4|webm|avi|mkv)$/i.test(url);
+  const isVideo = () => {
+    const video = data?.find(item => item?.endsWith('~mobile.mp4'));
+
+    return video;
   };
 
-  const isImage = url => {
-    return /\.(jpg|jpeg|png|gif)$/i.test(url);
+  const videoUri = isVideo();
+
+  console.log('VIDEO:', videoUri);
+
+  const isImage = () => {
+    const image = data?.find(item => item?.endsWith('~thumb.jpg'));
+
+    return image;
   };
+
+  const imageUri = isImage();
+
+  console.log('IMAGE:', imageUri);
+
+  if (loading) {
+    return (
+      <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
+        <View style={[GeneralStyles.container, styles.Container]}>
+          <Loading />
+        </View>
+      </SafeAreaView>
+    );
+  }
+
+  if (error) {
+    return (
+      <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
+        <View style={[GeneralStyles.container, styles.Container]}>
+          <Text style={styles.SubError}> Error: {error} </Text>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
         <ScrollView style={styles.ScrollView}>
-          {data?.map((url, index) => {
-            if (isVideo(url)) {
-              return (
-                <View style={styles.ItemContainer} key={index}>
+          {typeOf === 'video' ||
+            (videoUri && (
+              <>
+                <View style={styles.MediaContainer}>
                   <VideoPlayer
-                    style={{width: 200, height: 200}}
-                    video={{uri: url}}
+                    style={styles.VideoPlayer}
+                    video={{uri: String(videoUri)}}
                   />
                 </View>
-              );
-            } else if (isImage(url)) {
-              return (
-                <View style={styles.ItemContainer} key={index}>
+                <View style={styles.MediaContainer}>
                   <Image
-                    source={{uri: url}}
-                    style={{width: 200, height: 200}}
+                    source={{uri: String(imageUri)}}
+                    style={styles.MediaImage}
                   />
                 </View>
-              );
-            } else {
-              return null;
-            }
-          })}
+              </>
+            ))}
 
-          <View>
-            <Text style={styles.ItemTitle}>Details: </Text>
+          {typeOf === 'image' ||
+            (imageUri && (
+              <View style={styles.MediaContainer}>
+                <Image source={{uri: imageUri}} style={styles.MediaImage} />
+              </View>
+            ))}
+
+          <View style={styles.sections}>
+            <Text style={styles.SubText}>DETAILS: </Text>
 
             {itemDetail?.data?.map((item, index) => {
               return (
-                <View key={index} style={styles.ItemContainer}>
+                <View key={index}>
                   <Text style={styles.ItemNumber}>{index + 1}</Text>
-                  <Text style={styles.ItemTitle}>Title: {item?.title}</Text>
-                  <Text style={styles.ItemTitle}>Center: {item?.center}</Text>
+                  <Text style={styles.ItemSubText}>Title:</Text>
+                  <Text style={styles.ItemTitle}>{item?.title}</Text>
+                  <Text style={styles.ItemSubText}>Center:</Text>
+                  <Text style={styles.ItemTitle}>{item?.center}</Text>
+                  <Text style={styles.ItemSubText}>Date Created:</Text>
                   <Text style={styles.ItemTitle}>
-                    Date Created: {item?.date_created}
+                    {item?.date_created.substring(0, 10)}
                   </Text>
-                  <Text style={styles.ItemTitle}>
-                    Media Type: {item?.media_type}
-                  </Text>
-                  <Text style={styles.ItemTitle}>
-                    Description: {item?.description}
+                  <Text style={styles.ItemSubText}>Media Type:</Text>
+                  <Text style={styles.ItemTitle}>{item?.media_type}</Text>
+                  <Text style={styles.ItemSubText}>Description:</Text>
+                  <Text style={styles.ItemDescriptionTitle}>
+                    {item?.description}
                   </Text>
 
-                  <View>
-                    <Text style={styles.ItemTitle}>Keywords: </Text>
-                    {item?.keywords?.map((item, index) => {
-                      return (
+                  <Text style={styles.ItemSubText}>Keywords: </Text>
+                  {item?.keywords?.map((item, index) => {
+                    return (
+                      <Text style={styles.ItemNumber} key={index}>
+                        {index + 1}{' '}
                         <Text key={index} style={styles.ItemTitle}>
                           {item}
                         </Text>
-                      );
-                    })}
-                  </View>
+                      </Text>
+                    );
+                  })}
                 </View>
               );
             })}
           </View>
 
-          <View>
-            <Text style={styles.ItemTitle}>Links: </Text>
+          <View style={styles.sections}>
+            <Text style={styles.SubText}>LINKS: </Text>
             {itemDetail?.links?.map((item, index) => {
               return (
                 <View key={index}>
+                  <Text style={styles.ItemSubText}>Rel: </Text>
                   <Text style={styles.ItemTitle}>{item?.rel}</Text>
+                  <Text style={styles.ItemSubText}>Render: </Text>
                   <Text style={styles.ItemTitle}>{item?.render}</Text>
+                  <Text style={styles.ItemSubText}>URL: </Text>
                   <TouchableOpacity onPress={() => Linking.openURL(item?.href)}>
-                    <Text style={styles.ItemTitle}>URL: {item?.href}</Text>
+                    <Text style={styles.ItemURL}>{item?.href}</Text>
                   </TouchableOpacity>
                 </View>
               );
@@ -125,7 +166,6 @@ const styles = StyleSheet.create({
   Container: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
   },
 
   SubError: {
@@ -137,18 +177,86 @@ const styles = StyleSheet.create({
   ScrollView: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
-    padding: 20,
-    margin: 10,
+    paddingVertical: 30,
+    borderWidth: 0.5,
+  },
+
+  MediaContainer: {
+    width: Dimensions.get('window').width,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: colors.tertiary,
+  },
+
+  VideoPlayer: {
+    width: Dimensions.get('window').width - 20,
+    height: 300,
+  },
+
+  MediaImage: {
+    width: Dimensions.get('window').width - 20,
+    height: 300,
+  },
+
+  sections: {
+    flex: 1,
+    alignItems: 'flex-start',
+    gap: 10,
+    borderBottomWidth: 0.5,
+    borderBottomColor: colors.tertiary,
+    paddingVertical: 20,
+    paddingHorizontal: 30,
   },
 
   ItemContainer: {
     flex: 1,
-    alignItems: 'flex-start',
-    gap: 15,
-    borderBottomWidth: 0.5,
-    borderBottomColor: colors.tertiary,
-    marginBottom: 20,
-    padding: 10,
+    paddingBottom: 20,
+  },
+
+  SubText: {
+    fontFamily: fonts.bold,
+    fontSize: 22,
+    color: colors.darkBlue,
+    textAlign: 'left',
+    textDecorationLine: 'underline',
+  },
+
+  ItemSubText: {
+    fontFamily: fonts.bold,
+    fontSize: 20,
+    color: colors.textPrimary,
+    textAlign: 'left',
+    textDecorationLine: 'underline',
+  },
+
+  ItemTitle: {
+    fontFamily: fonts.regular,
+    fontSize: 18,
+    color: colors.textSecondary,
+    textAlign: 'left',
+  },
+
+  ItemDescriptionTitle: {
+    fontFamily: fonts.bold,
+    fontSize: 20,
+    color: colors.primary,
+    textAlign: 'justify',
+  },
+
+  ItemNumber: {
+    fontFamily: fonts.bold,
+    fontSize: 18,
+    color: colors.dark,
+    textAlign: 'left',
+  },
+
+  ItemURL: {
+    fontFamily: fonts.bold,
+    fontSize: 18,
+    color: colors.linkBlue,
+    textAlign: 'left',
   },
 });
 
