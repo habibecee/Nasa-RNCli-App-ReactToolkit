@@ -46,7 +46,26 @@ function NasaMediaNavigation({route}) {
         //   },
         // })}
       />
-      <Stack.Screen name="NasaMediaDetails" component={NasaMediaDetails} />
+      <Stack.Screen
+        name="NasaMediaDetails"
+        component={NasaMediaDetails}
+        options={({route}) => ({
+          title: route?.params?.title,
+          headerTitleStyle: {
+            fontFamily: fonts.bold,
+            fontSize: 20,
+          },
+          headerStyle: {
+            backgroundColor: colors.tertiary,
+          },
+          headerTintColor: colors.textDark,
+          headerBackTitleStyle: {
+            fontFamily: fonts.bold,
+            color: colors.textDark,
+            size: 20,
+          },
+        })}
+      />
     </Stack.Navigator>
   );
 }
