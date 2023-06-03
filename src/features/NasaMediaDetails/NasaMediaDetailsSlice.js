@@ -37,7 +37,7 @@ const NasaMediaDetailsSlice = createSlice({
         state.status = 'succeeded';
         state.loading = false;
         state.error = null;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(fetchMediaDetails.rejected, (state, action) => {
         state.error = action.error.message;

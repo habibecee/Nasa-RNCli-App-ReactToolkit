@@ -45,7 +45,7 @@ const NasaMediaSlice = createSlice({
         state.status = 'succeeded';
         state.loading = false;
         state.error = null;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(fetchNasaImages.rejected, (state, action) => {
         state.error = action.error.message;
@@ -64,7 +64,7 @@ const NasaMediaSlice = createSlice({
         state.status = 'succeeded';
         state.loading = false;
         state.error = null;
-        console.log(action.payload);
+        // console.log(action.payload);
       })
       .addCase(fetchNasaVideos.rejected, (state, action) => {
         state.error = action.error.message;

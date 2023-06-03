@@ -26,7 +26,7 @@ const validationScheme = Yup.object().shape({
 
 export default function LogIn() {
   const handleSubmit = values => {
-    console.log(values);
+    // console.log(values);
   };
 
   return (

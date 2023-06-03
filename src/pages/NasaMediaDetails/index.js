@@ -21,24 +21,31 @@ function NasaMediaDetails({route}) {
   const dispatch = useDispatch();
   const {data, loading, error} = useSelector(state => state?.NasaMediaDetails);
 
+  console.log('TYPEOF:', typeOf);
+
   useEffect(() => {
     dispatch(fetchMediaDetails(id));
   }, [dispatch, id]);
 
   const isVideo = () => {
     const video = data?.find(item => item?.endsWith('~mobile.mp4'));
-    console.log(video);
+
     return video;
   };
 
+  const videoUri = isVideo();
+
+  console.log('VIDEO:', videoUri);
+
   const isImage = () => {
     const image = data?.find(item => item?.endsWith('~thumb.jpg'));
-    console.log(image);
+
     return image;
   };
 
-  const videoUri = isVideo();
   const imageUri = isImage();
+
+  console.log('IMAGE:', imageUri);
 
   if (loading) {
     return (
@@ -64,62 +71,68 @@ function NasaMediaDetails({route}) {
     <SafeAreaView style={[GeneralStyles.SafeAreaView, styles.SafeAreaView]}>
       <View style={[GeneralStyles.container, styles.Container]}>
         <ScrollView style={styles.ScrollView}>
-          {typeOf === 'video' && videoUri && (
-            <>
-              <View style={styles.MediaContainer}>
-                <VideoPlayer
-                  style={styles.VideoPlayer}
-                  video={{uri: videoUri}}
-                />
-              </View>
+          {typeOf === 'video' ||
+            (videoUri && (
+              <>
+                <View style={styles.MediaContainer}>
+                  <VideoPlayer
+                    style={styles.VideoPlayer}
+                    video={{uri: String(videoUri)}}
+                  />
+                </View>
+                <View style={styles.MediaContainer}>
+                  <Image
+                    source={{uri: String(imageUri)}}
+                    style={styles.MediaImage}
+                  />
+                </View>
+              </>
+            ))}
+
+          {typeOf === 'image' ||
+            (imageUri && (
               <View style={styles.MediaContainer}>
                 <Image source={{uri: imageUri}} style={styles.MediaImage} />
               </View>
-              <View style={styles.sections}>
-                <Text style={styles.SubText}>DETAILS: </Text>
+            ))}
 
-                {itemDetail?.data?.map((item, index) => {
-                  return (
-                    <View key={index}>
-                      <Text style={styles.ItemNumber}>{index + 1}</Text>
-                      <Text style={styles.ItemSubText}>Title:</Text>
-                      <Text style={styles.ItemTitle}>{item?.title}</Text>
-                      <Text style={styles.ItemSubText}>Center:</Text>
-                      <Text style={styles.ItemTitle}>{item?.center}</Text>
-                      <Text style={styles.ItemSubText}>Date Created:</Text>
-                      <Text style={styles.ItemTitle}>
-                        {item?.date_created.substring(0, 10)}
+          <View style={styles.sections}>
+            <Text style={styles.SubText}>DETAILS: </Text>
+
+            {itemDetail?.data?.map((item, index) => {
+              return (
+                <View key={index}>
+                  <Text style={styles.ItemNumber}>{index + 1}</Text>
+                  <Text style={styles.ItemSubText}>Title:</Text>
+                  <Text style={styles.ItemTitle}>{item?.title}</Text>
+                  <Text style={styles.ItemSubText}>Center:</Text>
+                  <Text style={styles.ItemTitle}>{item?.center}</Text>
+                  <Text style={styles.ItemSubText}>Date Created:</Text>
+                  <Text style={styles.ItemTitle}>
+                    {item?.date_created.substring(0, 10)}
+                  </Text>
+                  <Text style={styles.ItemSubText}>Media Type:</Text>
+                  <Text style={styles.ItemTitle}>{item?.media_type}</Text>
+                  <Text style={styles.ItemSubText}>Description:</Text>
+                  <Text style={styles.ItemDescriptionTitle}>
+                    {item?.description}
+                  </Text>
+
+                  <Text style={styles.ItemSubText}>Keywords: </Text>
+                  {item?.keywords?.map((item, index) => {
+                    return (
+                      <Text style={styles.ItemNumber} key={index}>
+                        {index + 1}{' '}
+                        <Text key={index} style={styles.ItemTitle}>
+                          {item}
+                        </Text>
                       </Text>
-                      <Text style={styles.ItemSubText}>Media Type:</Text>
-                      <Text style={styles.ItemTitle}>{item?.media_type}</Text>
-                      <Text style={styles.ItemSubText}>Description:</Text>
-                      <Text style={styles.ItemDescriptionTitle}>
-                        {item?.description}
-                      </Text>
-
-                      <Text style={styles.ItemSubText}>Keywords: </Text>
-                      {item?.keywords?.map((item, index) => {
-                        return (
-                          <Text style={styles.ItemNumber}>
-                            {index + 1}{' '}
-                            <Text key={index} style={styles.ItemTitle}>
-                              {item}
-                            </Text>
-                          </Text>
-                        );
-                      })}
-                    </View>
-                  );
-                })}
-              </View>
-            </>
-          )}
-
-          {typeOf === 'image' && imageUri && (
-            <View style={styles.MediaContainer}>
-              <Image source={{uri: imageUri}} style={styles.MediaImage} />
-            </View>
-          )}
+                    );
+                  })}
+                </View>
+              );
+            })}
+          </View>
 
           <View style={styles.sections}>
             <Text style={styles.SubText}>LINKS: </Text>
