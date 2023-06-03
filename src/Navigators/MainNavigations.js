@@ -37,7 +37,7 @@ function MainNavigations() {
           })}
           initialRouteName="Home">
           <Tab.Screen
-            name="Categories"
+            name="Category List"
             component={CategoryNavigation}
             options={{
               headerShown: false,
