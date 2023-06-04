@@ -73,7 +73,7 @@ function NasaMediaDetails({route}) {
       <View style={[GeneralStyles.container, styles.Container]}>
         <ScrollView style={styles.ScrollView}>
           <View style={styles.MediaContainer}>
-            {videoUri ? (
+            {videoUri && (
               <Video
                 style={styles.VideoPlayer}
                 source={{uri: formattedUri}}
@@ -81,8 +81,6 @@ function NasaMediaDetails({route}) {
                 playInBackground={false}
                 paused={true}
               />
-            ) : (
-              <Text style={styles.ItemNumber}>NO DATA AVAILABLE</Text>
             )}
             <Image
               source={{uri: itemDetail?.links[0]?.href}}

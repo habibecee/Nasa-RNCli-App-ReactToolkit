@@ -105,7 +105,6 @@ export default function SignIn() {
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
-                inputMode="email"
                 style={styles.TextInput}
                 placeholderTextColor={colors.secondary}
                 placeholder="E-Mail"
@@ -129,7 +128,6 @@ export default function SignIn() {
             }}
             render={({field: {onChange, onBlur, value}}) => (
               <TextInput
-                inputMode="password"
                 style={styles.TextInput}
                 placeholderTextColor={colors.secondary}
                 placeholder="Password"
